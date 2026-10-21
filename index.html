@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1E1E2E" />
+    <meta name="description" content="Hisab – kirana stock and reorder tracker" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>हिसाब / Hisab</title>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1 class="app-title">हिसाब / Hisab</h1>
+    </header>
+
+    <main class="app-main" id="app-main">
+      <!-- Screen content will be rendered here -->
+      <p class="placeholder-text">आपका स्टॉक यहाँ दिखेगा। / Your stock will appear here.</p>
+    </main>
+
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Main navigation">
+      <!-- Bottom navigation items will be added here -->
+      <button class="nav-btn" type="button" aria-label="स्टॉक / Stock">
+        <span class="nav-icon">📦</span>
+        <span class="nav-label">स्टॉक / Stock</span>
+      </button>
+      <button class="nav-btn" type="button" aria-label="रिऑर्डर / Reorder">
+        <span class="nav-icon">🔁</span>
+        <span class="nav-label">रिऑर्डर / Reorder</span>
+      </button>
+      <button class="nav-btn" type="button" aria-label="सेटिंग / Settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">सेटिंग / Settings</span>
+      </button>
+    </nav>
+
+    <script src="app.js"></script>
+  </body>
+</html>

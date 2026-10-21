@@ -1,0 +1,149 @@
+/* ============================================================
+   Hisab – Base Styles
+   Notebook aesthetic: cream background, faint blue ruled lines,
+   dark ink text. Touch-friendly, 360 px minimum width.
+   ============================================================ */
+
+/* --- Reset & Box Model --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Root Variables --- */
+:root {
+  --color-bg:      #FFF8E7;
+  --color-text:    #1E1E2E;
+  --color-rule:    #BDD7EE;   /* faint blue ruled lines */
+  --color-accent:  #1E1E2E;
+  --color-surface: #FFFDF5;
+
+  --font-size-base: 18px;
+  --font-size-sm:   15px;
+  --font-size-lg:   22px;
+  --font-size-xl:   26px;
+
+  --touch-target:  56px;
+  --bottom-nav-h:  64px;
+  --header-h:      56px;
+
+  --rule-gap: 28px; /* spacing between ruled lines */
+}
+
+/* --- Base --- */
+html {
+  font-size: var(--font-size-base);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Noto Sans', 'Segoe UI', Arial, sans-serif;
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  min-width: 360px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+
+  /* Notebook ruled lines */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(var(--rule-gap) - 1px),
+    var(--color-rule) calc(var(--rule-gap) - 1px),
+    var(--color-rule) var(--rule-gap)
+  );
+  background-attachment: local;
+}
+
+/* --- Header --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background-color: var(--color-bg);
+  border-bottom: 2px solid var(--color-rule);
+}
+
+.app-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.01em;
+}
+
+/* --- Main Content --- */
+.app-main {
+  flex: 1;
+  padding: 16px 16px calc(var(--bottom-nav-h) + 16px);
+  overflow-y: auto;
+}
+
+.placeholder-text {
+  margin-top: 24px;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  opacity: 0.6;
+  text-align: center;
+}
+
+/* --- Bottom Navigation --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: var(--bottom-nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--color-bg);
+  border-top: 2px solid var(--color-rule);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  padding: 4px 0;
+  font-size: var(--font-size-sm);
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+.nav-btn:active,
+.nav-btn[aria-current="page"] {
+  opacity: 1;
+}
+
+.nav-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.nav-label {
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}

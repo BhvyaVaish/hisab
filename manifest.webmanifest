@@ -1,0 +1,12 @@
+{
+  "name": "Hisab",
+  "short_name": "Hisab",
+  "description": "Offline-first stock and reorder tracker for kirana shop owners",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "theme_color": "#1E1E2E",
+  "background_color": "#FFF8E7",
+  "lang": "hi",
+  "icons": []
+}
