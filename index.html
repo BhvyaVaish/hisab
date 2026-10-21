@@ -6,34 +6,37 @@
     <meta name="theme-color" content="#1E1E2E" />
     <meta name="description" content="Hisab – kirana stock and reorder tracker" />
     <link rel="manifest" href="manifest.webmanifest" />
+
+    <!-- Google Fonts: Caveat for notebook headings, Noto Sans Devanagari for Hindi -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="styles.css" />
-    <title>हिसाब / Hisab</title>
+    <title>हिसाब / Hisab – दुकान / Shop</title>
   </head>
   <body>
+    <!-- Notebook Red Vertical Margin Line is rendered via body::before in CSS -->
+
     <header class="app-header">
-      <h1 class="app-title">हिसाब / Hisab</h1>
+      <div class="header-inner">
+        <span class="app-badge">हिसाब / Hisab</span>
+        <h1 class="screen-heading">
+          <span class="screen-heading-hi">दुकान</span>
+          <span class="screen-heading-sep">/</span>
+          <span class="screen-heading-en">Shop</span>
+        </h1>
+      </div>
     </header>
 
     <main class="app-main" id="app-main">
-      <!-- Screen content will be rendered here -->
-      <p class="placeholder-text">आपका स्टॉक यहाँ दिखेगा। / Your stock will appear here.</p>
+      <div id="shop-container" class="shop-container">
+        <!-- Dynamic shop content: item rows or friendly empty state rendered by app.js -->
+      </div>
     </main>
-
-    <nav class="bottom-nav" id="bottom-nav" aria-label="Main navigation">
-      <!-- Bottom navigation items will be added here -->
-      <button class="nav-btn" type="button" aria-label="स्टॉक / Stock">
-        <span class="nav-icon">📦</span>
-        <span class="nav-label">स्टॉक / Stock</span>
-      </button>
-      <button class="nav-btn" type="button" aria-label="रिऑर्डर / Reorder">
-        <span class="nav-icon">🔁</span>
-        <span class="nav-label">रिऑर्डर / Reorder</span>
-      </button>
-      <button class="nav-btn" type="button" aria-label="सेटिंग / Settings">
-        <span class="nav-icon">⚙️</span>
-        <span class="nav-label">सेटिंग / Settings</span>
-      </button>
-    </nav>
 
     <script src="app.js"></script>
   </body>
