@@ -3,39 +3,45 @@
 Follow these rules for every change in this project:
 
 ## 1. Project Overview & Scope
-- **Project**: Hisab, an offline-first Progressive Web App (PWA) tailored for Indian kirana shop owners to track stock and reorder.
+- **Project**: Hisab, an offline-first Progressive Web App (PWA) for Indian kirana shop owners to track stock and reorder.
 - **Strict Scope**: Reordering is the core product. Do not implement billing, GST, invoices, payments, user login, or user accounts.
 
 ## 2. Tech Stack
-- **Pure Vanilla**: Plain HTML, CSS, and JavaScript only.
-- **No Dependencies**: No frameworks, no build tools, no compilers, and no npm.
+- **Stack**: Vite, React (JavaScript — no TypeScript), Tailwind v4, Motion, idb, vite-plugin-pwa.
+- **No other frameworks.** No Next.js, no Vue, no Angular, no jQuery.
 
 ## 3. Localization & Language
 - **Bilingual**: Every user-visible string must be provided in both Hindi and English.
-- **Centralized Strings**: Maintain all strings centrally in a single `STRINGS` object inside `app.js`.
+- **Centralized Strings**: All strings live only in `src/lib/strings.js` as the `STRINGS` export.
 
-## 4. UI/UX & Design Guidelines
-- **Notebook Aesthetic**: Notebook-page style featuring a cream background (`#FFF8E7`), faint blue ruled lines, and dark text (`#1E1E2E`).
-- **Touch & Accessibility**:
-  - Touch targets must be at least `56px`.
-  - Body text must be at least `18px`.
-  - Primary actions must live in a bottom navigation/action bar reachable with one thumb.
-- **Responsiveness**: Layout must function cleanly on screen widths as narrow as `360px`.
+## 4. Storage
+- **Only through `src/lib/db.js`**: All IndexedDB reads and writes go through `src/lib/db.js`.
+- **Database**: `hisab-db`, version 1, stores `items` (keyPath `id`) and `settings` (keyPath `key`).
+- **No rounding**: quantities like 0.5, 2.25, 1.333 must be stored exactly.
 
-## 5. Offline-First Philosophy
-- **Zero-Block Offline**: The app must fully function without an internet connection.
-- **Core Flows**: Never introduce any network call that blocks core flows (adding stock, recording sales, viewing lists).
-
-## 6. Gemma Integration & Safety
-- **Isolation**: All Gemma-related calls must reside exclusively in `gemma.js`.
-- **Model ID**: The model identifier must be defined as a top-level constant `GEMMA_MODEL_ID` in `gemma.js`.
+## 5. Gemma Integration & Safety
+- **Isolation**: All Gemma-related calls must reside exclusively in `src/lib/gemma.js`.
+- **Model ID**: The model identifier must be defined as a top-level constant `GEMMA_MODEL_ID` in `src/lib/gemma.js`.
 - **Content Boundaries**: Never query Gemma for medical, dosage, or drug information.
 - **Owner Confirmation**: Gemma must never write directly to persistent storage; changes must always be confirmed by the shop owner first.
 
-## 7. Security & API Keys
-- **Storage**: The Gemma API key is entered manually by the user in Settings and saved only in client-side IndexedDB.
+## 6. Security & API Keys
+- **Storage**: The Gemma API key is entered manually by the user in Settings and saved only in the `settings` IndexedDB store.
 - **Zero Secrets**: Never hardcode, log, or commit any API key.
 
-## 8. Commit & Development Workflow
-- **Atomic Commits**: Exactly one feature per commit.
-- **Clear Descriptions**: Keep changes small and explicitly declare all modified and created files.
+## 7. Offline-First Philosophy
+- **Zero-Block Offline**: The core flows (add stock, record sale, view item list) must work with no network connection.
+- **No blocking network calls** in the critical path.
+
+## 8. UI/UX Requirements
+- **Touch Targets**: At least 56px for every interactive element.
+- **Body Text**: At least 18px.
+- **Responsive**: Works at 360px screen width. No horizontal scroll.
+
+## 9. Before Reporting Any Change
+- Run `npm test` — must pass.
+- Run `npm run build` — must pass.
+
+## 10. Commit & Development Workflow
+- **Atomic Commits**: One feature or fix per commit, under ~300 lines changed.
+- **Clear Descriptions**: State which files changed and why.

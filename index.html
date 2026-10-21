@@ -2,73 +2,14 @@
 <html lang="hi">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1E1E2E" />
     <meta name="description" content="Hisab – kirana stock and reorder tracker" />
-    <link rel="manifest" href="manifest.webmanifest" />
-
-    <!-- Google Fonts: Caveat for notebook headings, Noto Sans Devanagari for Hindi -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="styles.css" />
     <title>हिसाब / Hisab</title>
   </head>
   <body>
-    <!-- Notebook Red Vertical Margin Line is rendered via body::before in CSS -->
-
-    <!-- App Header: screen title is updated dynamically by app.js -->
-    <header class="app-header" id="app-header">
-      <div class="header-inner">
-        <span class="app-badge">हिसाब / Hisab</span>
-        <h1 class="screen-heading" id="screen-heading">
-          <span class="screen-heading-hi" id="screen-title-hi">दुकान</span>
-          <span class="screen-heading-sep">/</span>
-          <span class="screen-heading-en" id="screen-title-en">Shop</span>
-        </h1>
-      </div>
-    </header>
-
-    <!-- Main Content: all screens render here -->
-    <main class="app-main" id="app-main">
-      <!-- Screen containers: only one is visible at a time -->
-      <div id="screen-shop"    class="screen screen--active"></div>
-      <div id="screen-add"     class="screen"></div>
-      <div id="screen-reorder" class="screen"></div>
-    </main>
-
-    <!-- Bottom Navigation Bar -->
-    <nav class="bottom-nav" id="bottom-nav" role="navigation" aria-label="मुख्य नेविगेशन / Main navigation">
-      <button class="nav-btn nav-btn--active" type="button" data-tab="shop" aria-current="page">
-        <span class="nav-icon" aria-hidden="true">🏪</span>
-        <span class="nav-label">
-          <span class="nav-label-hi">दुकान</span>
-          <span class="nav-label-sep">/</span>
-          <span class="nav-label-en">Shop</span>
-        </span>
-      </button>
-      <button class="nav-btn" type="button" data-tab="add">
-        <span class="nav-icon" aria-hidden="true">➕</span>
-        <span class="nav-label">
-          <span class="nav-label-hi">माल</span>
-          <span class="nav-label-sep">/</span>
-          <span class="nav-label-en">Add</span>
-        </span>
-      </button>
-      <button class="nav-btn" type="button" data-tab="reorder">
-        <span class="nav-icon" aria-hidden="true">🔁</span>
-        <span class="nav-label">
-          <span class="nav-label-hi">ऑर्डर</span>
-          <span class="nav-label-sep">/</span>
-          <span class="nav-label-en">Reorder</span>
-        </span>
-      </button>
-    </nav>
-
-    <script src="app.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
