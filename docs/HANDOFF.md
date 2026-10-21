@@ -4,7 +4,7 @@
 | Step | Status | Commit | Notes |
 |---|---|---|---|
 | Phase 1.1 Base | Done | 786fe0f | Vite + React + Tailwind v4 base scaffold |
-| Phase 1.2 Data Layer | Not started | - | Port db.js and unit tests |
+| Phase 1.2 Data Layer | Done | 9992469 | Port db.js and unit tests |
 | Phase 1.3 Shop Screen | Not started | - | Port Shop screen and ItemRow |
 | Phase 1.4 Add Screen & Nav | Not started | - | Port AddScreen, ReorderScreen, BottomNav |
 | Phase 1.5 Remove Vanilla & Parity | Not started | - | Delete old files, add PARITY.md |
@@ -23,7 +23,7 @@
 
 ## 2. Times
 - Started: 2026-10-21 12:18:54 IST
-- Last updated: 2026-10-21 13:02:00 IST
+- Last updated: 2026-10-21 13:18:00 IST
 
 ## 3. Current Stack & Structure
 - Stack: Vite, React 19, Tailwind CSS v4 (@tailwindcss/vite), Motion, Lucide React, idb, vitest, fake-indexeddb
@@ -55,7 +55,7 @@
 - Deploy: automatic on push to `main` via `.github/workflows/deploy.yml`
 
 ## 6. Next Step
-Port data layer (`src/lib/db.js`) and run `src/test/db.test.js`.
+Port shop screen (`ShopScreen.jsx`, `ItemRow.jsx`, `TallyMarks.jsx`).
 
 ## 7. Known Issues and Blockers
 - None.
