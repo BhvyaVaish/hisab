@@ -1,0 +1,52 @@
+/* Tally mark animations (used by TallyMarks.jsx) */
+
+.tally-container {
+  width: 48px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tally-svg {
+  overflow: visible;
+}
+
+.tally-line {
+  stroke: #1E1E2E;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  fill: none;
+}
+
+@keyframes drawVerticalStroke {
+  from { stroke-dashoffset: 32; opacity: 0.3; }
+  to   { stroke-dashoffset: 0;  opacity: 1;   }
+}
+
+.tally-anim-v {
+  stroke-dasharray: 32;
+  stroke-dashoffset: 0;
+  animation: drawVerticalStroke 0.18s ease-out forwards;
+}
+
+@keyframes drawDiagonalStroke {
+  from { stroke-dashoffset: 54; opacity: 0.3; }
+  to   { stroke-dashoffset: 0;  opacity: 1;   }
+}
+
+.tally-anim-diag {
+  stroke-dasharray: 54;
+  stroke-dashoffset: 0;
+  animation: drawDiagonalStroke 0.22s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tally-anim-v,
+  .tally-anim-diag {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
