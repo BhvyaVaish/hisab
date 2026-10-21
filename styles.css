@@ -14,26 +14,36 @@
 
 /* --- Root Design Tokens --- */
 :root {
-  --color-bg:          #FFF8E7; /* Cream notebook paper */
-  --color-text:        #1E1E2E; /* Dark ink text */
-  --color-rule:        #C5D8EA; /* Faint blue horizontal lines */
-  --color-margin:      #E26D6D; /* Red vertical margin line */
-  --color-card-bg:     #FFFDF5; /* Subtle white/cream surface */
-  --color-btn-sold:    #1E1E2E; /* Primary dark ink button */
-  --color-btn-sold-text: #FFF8E7; /* Cream text on dark button */
+  --color-bg:             #FFF8E7; /* Cream notebook paper */
+  --color-text:           #1E1E2E; /* Dark ink text */
+  --color-rule:           #C5D8EA; /* Faint blue horizontal lines */
+  --color-margin:         #E26D6D; /* Red vertical margin line */
+  --color-nav-bg:         #1E1E2E; /* Bottom nav background */
+  --color-nav-text:       #FFF8E7; /* Nav label text */
+  --color-nav-active:     #FFF8E7; /* Active tab label */
+  --color-nav-inactive:   rgba(255,248,231,0.45);
+  --color-btn-primary:    #1E1E2E;
+  --color-btn-primary-text: #FFF8E7;
+  --color-input-border:   #C5D8EA;
+  --color-input-focus:    #2B4C7E;
+  --color-error:          #C62828;
+  --color-success-bg:     #E6F4EA;
+  --color-success-text:   #1B5E20;
 
   --font-body:    'Noto Sans Devanagari', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
   --font-heading: 'Caveat', 'Noto Sans Devanagari', cursive, sans-serif;
 
-  --font-size-base: 18px; /* AGENTS.md: Body text at least 18px */
+  --font-size-base: 18px;  /* AGENTS.md: Body text at least 18px */
+  --font-size-sm:   15px;
   --font-size-lg:   20px;
   --font-size-xl:   24px;
   --font-size-2xl:  36px;
 
-  --line-grid:     40px; /* Blue lines every 40px */
-  --margin-left-x: 44px; /* Left red margin line position */
-  --content-pad-l: 56px; /* Content left padding (clears margin line + 12px) */
-  --touch-target:  56px; /* Minimum 56px touch targets */
+  --line-grid:      40px;  /* Blue ruled lines every 40px */
+  --margin-left-x:  44px;  /* Red margin line X position */
+  --content-pad-l:  56px;  /* Content left padding – clears margin line */
+  --touch-target:   56px;  /* Minimum touch target (AGENTS.md) */
+  --bottom-nav-h:   66px;  /* Bottom navigation bar height */
 }
 
 /* --- Base & Notebook Page --- */
@@ -67,7 +77,7 @@ body {
   background-attachment: local;
 }
 
-/* Red vertical margin line running down the entire page */
+/* Red vertical margin line running the full page height */
 body::before {
   content: '';
   position: fixed;
@@ -78,10 +88,10 @@ body::before {
   background-color: var(--color-margin);
   opacity: 0.85;
   pointer-events: none;
-  z-index: 10;
+  z-index: 30;
 }
 
-/* --- Header --- */
+/* --- App Header --- */
 .app-header {
   position: sticky;
   top: 0;
@@ -138,15 +148,106 @@ body::before {
 /* --- Main Content Area --- */
 .app-main {
   flex: 1;
-  padding: 0 12px 48px var(--content-pad-l);
   overflow-y: auto;
+  padding-bottom: var(--bottom-nav-h);
+  position: relative;
 }
 
-.shop-container {
+/* Screen management: only one screen visible at a time */
+.screen {
+  display: none;
   width: 100%;
+  padding: 0 12px 24px var(--content-pad-l);
 }
 
-/* --- Items List --- */
+.screen--active {
+  display: block;
+}
+
+/* --- Bottom Navigation Bar --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: var(--bottom-nav-h);
+  background-color: var(--color-nav-bg);
+  display: flex;
+  align-items: stretch;
+  box-shadow: 0 -2px 12px rgba(30,30,46,0.22);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: var(--touch-target);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-nav-inactive);
+  padding: 6px 4px;
+  border-top: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.nav-btn--active,
+.nav-btn[aria-current="page"] {
+  color: var(--color-nav-active);
+  border-top-color: var(--color-margin); /* Red accent on active tab */
+}
+
+.nav-btn:active {
+  opacity: 0.8;
+}
+
+.nav-btn:focus-visible {
+  outline: 2px solid var(--color-rule);
+  outline-offset: -2px;
+}
+
+.nav-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.nav-label {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.nav-label-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 13px;
+}
+
+.nav-label-sep {
+  opacity: 0.4;
+  font-size: 11px;
+}
+
+.nav-label-en {
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+/* ============================================================
+   Shop Screen
+   ============================================================ */
+
+/* Items List */
 .items-list {
   list-style: none;
   margin: 0;
@@ -154,22 +255,20 @@ body::before {
   width: 100%;
 }
 
-/* Each item is one full-width row */
 .item-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   padding: 12px 0;
-  min-height: 80px; /* Spans 2 notebook ruled lines */
+  min-height: 80px;
   border-bottom: 1px solid var(--color-rule);
   width: 100%;
 }
 
-/* Item details (Name + Stock) */
 .item-details {
   flex: 1;
-  min-width: 0; /* Allows text to wrap properly on narrow screens */
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -217,7 +316,10 @@ body::before {
   font-weight: 700;
   color: var(--color-text);
   font-variant-numeric: tabular-nums;
-  transition: transform 0.12s ease;
+}
+
+.stock-value.low-stock {
+  color: var(--color-error);
 }
 
 .stock-unit {
@@ -226,20 +328,14 @@ body::before {
   opacity: 0.8;
 }
 
-/* Low stock indicator */
-.stock-value.low-stock {
-  color: #C62828;
-}
-
-/* --- Action Area (Tally + Button) --- */
+/* Action area: tally + sold button */
 .item-action-area {
   display: flex;
   align-items: center;
   gap: 6px;
-  flex-shrink: 0; /* Action area never shrinks below target */
+  flex-shrink: 0;
 }
 
-/* Tally box: fixed size to prevent layout shifts */
 .tally-container {
   width: 48px;
   height: 38px;
@@ -255,7 +351,6 @@ body::before {
   overflow: visible;
 }
 
-/* Tally Strokes */
 .tally-line {
   stroke: var(--color-text);
   stroke-width: 3.2;
@@ -263,16 +358,9 @@ body::before {
   fill: none;
 }
 
-/* CSS Animation for newly drawn vertical stroke */
 @keyframes drawVerticalStroke {
-  from {
-    stroke-dashoffset: 32;
-    opacity: 0.3;
-  }
-  to {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
+  from { stroke-dashoffset: 32; opacity: 0.3; }
+  to   { stroke-dashoffset: 0;  opacity: 1;   }
 }
 
 .tally-anim-v {
@@ -281,16 +369,9 @@ body::before {
   animation: drawVerticalStroke 0.16s ease-out forwards;
 }
 
-/* CSS Animation for 5th diagonal gate-stroke */
 @keyframes drawDiagonalStroke {
-  from {
-    stroke-dashoffset: 54;
-    opacity: 0.3;
-  }
-  to {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
+  from { stroke-dashoffset: 54; opacity: 0.3; }
+  to   { stroke-dashoffset: 0;  opacity: 1;   }
 }
 
 .tally-anim-diag {
@@ -299,31 +380,23 @@ body::before {
   animation: drawDiagonalStroke 0.22s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
 }
 
-/* Smooth fade out when resetting tally after 5th stroke */
 @keyframes tallyResetFadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.9);
-  }
+  from { opacity: 1; transform: scale(1);   }
+  to   { opacity: 0; transform: scale(0.9); }
 }
 
 .tally-fade-out {
   animation: tallyResetFadeOut 0.25s ease-out forwards;
 }
 
-/* --- "बेचा / Sold" Button --- */
-/* Large thumb-friendly touch target: at least 56px tall */
+/* Sold button: 56px+ touch target */
 .sold-btn {
   min-height: var(--touch-target);
   min-width: 72px;
   padding: 6px 12px;
-  background-color: var(--color-btn-sold);
-  color: var(--color-btn-sold-text);
-  border: 2px solid var(--color-btn-sold);
+  background-color: var(--color-btn-primary);
+  color: var(--color-btn-primary-text);
+  border: 2px solid var(--color-btn-primary);
   border-radius: 8px;
   cursor: pointer;
   display: flex;
@@ -331,8 +404,8 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 2px;
-  box-shadow: 0 2px 4px rgba(30, 30, 46, 0.15);
-  transition: transform 0.1s ease, background-color 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 0 2px 4px rgba(30,30,46,0.15);
+  transition: transform 0.1s ease, background-color 0.1s ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -340,11 +413,10 @@ body::before {
 .sold-btn:active {
   transform: scale(0.94);
   background-color: #313348;
-  box-shadow: 0 1px 2px rgba(30, 30, 46, 0.2);
 }
 
 .sold-btn:focus-visible {
-  outline: 3px solid #2B4C7E;
+  outline: 3px solid var(--color-input-focus);
   outline-offset: 2px;
 }
 
@@ -361,8 +433,8 @@ body::before {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  line-height: 1;
   opacity: 0.85;
+  line-height: 1;
 }
 
 /* --- Friendly Empty State --- */
@@ -375,7 +447,7 @@ body::before {
 }
 
 .empty-card {
-  background-color: rgba(255, 253, 245, 0.85);
+  background-color: rgba(255,253,245,0.85);
   border: 2px dashed var(--color-rule);
   border-radius: 12px;
   padding: 28px 20px;
@@ -393,7 +465,6 @@ body::before {
   font-family: 'Noto Sans Devanagari', sans-serif;
   font-size: 22px;
   font-weight: 700;
-  color: var(--color-text);
   margin-bottom: 2px;
 }
 
@@ -407,7 +478,6 @@ body::before {
 
 .empty-desc-hi {
   font-size: var(--font-size-base);
-  color: var(--color-text);
   margin-bottom: 2px;
 }
 
@@ -417,19 +487,18 @@ body::before {
   margin-bottom: 20px;
 }
 
-/* Friendly seed button inside empty state */
 .btn-seed-demo {
   min-height: var(--touch-target);
   padding: 12px 20px;
   font-family: var(--font-body);
   font-size: 17px;
   font-weight: 600;
-  background-color: var(--color-text);
-  color: var(--color-bg);
+  background-color: var(--color-btn-primary);
+  color: var(--color-btn-primary-text);
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(30, 30, 46, 0.2);
+  box-shadow: 0 2px 4px rgba(30,30,46,0.2);
   transition: transform 0.1s ease, opacity 0.15s ease;
   user-select: none;
 }
@@ -437,4 +506,254 @@ body::before {
 .btn-seed-demo:active {
   transform: scale(0.96);
   opacity: 0.9;
+}
+
+/* ============================================================
+   Add Screen (माल / Add)
+   ============================================================ */
+.add-screen-inner {
+  padding-top: 16px;
+  padding-bottom: 80px; /* space above save bar */
+  max-width: 600px;
+}
+
+/* Form field group */
+.field-group {
+  margin-bottom: 24px;
+}
+
+.field-label {
+  display: block;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.field-label-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.field-label-sep {
+  opacity: 0.4;
+  margin: 0 4px;
+}
+
+.field-label-en {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* Text inputs, number inputs, select */
+.field-input,
+.field-select {
+  display: block;
+  width: 100%;
+  min-height: var(--touch-target);  /* AGENTS.md: at least 56px */
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base); /* AGENTS.md: at least 18px */
+  color: var(--color-text);
+  background-color: rgba(255,253,245,0.9);
+  border: 2px solid var(--color-input-border);
+  border-radius: 8px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  /* Align with the notebook ruled lines */
+  line-height: 1.5;
+}
+
+.field-input::placeholder {
+  opacity: 0.45;
+  font-size: var(--font-size-base);
+}
+
+.field-input:focus,
+.field-select:focus {
+  border-color: var(--color-input-focus);
+  box-shadow: 0 0 0 3px rgba(43,76,126,0.15);
+}
+
+.field-input.has-error,
+.field-select.has-error {
+  border-color: var(--color-error);
+}
+
+.field-error {
+  display: none;
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.field-error.visible {
+  display: block;
+}
+
+/* Select wrapper for custom dropdown arrow */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: '▾';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 20px;
+  color: var(--color-text);
+  opacity: 0.6;
+}
+
+.field-select {
+  padding-right: 40px; /* make room for custom arrow */
+  cursor: pointer;
+}
+
+/* Two-column row for stock + reorder level */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* --- Save Bar (fixed at bottom, thumb-reachable) --- */
+/* Visible only when the Add tab is active */
+.save-bar {
+  display: none;
+  position: fixed;
+  bottom: var(--bottom-nav-h);
+  left: 0;
+  right: 0;
+  z-index: 19;
+  padding: 10px 12px 10px var(--content-pad-l);
+  background-color: var(--color-bg);
+  border-top: 2px solid var(--color-rule);
+}
+
+.save-bar--visible {
+  display: block;
+}
+
+.btn-save {
+  width: 100%;
+  min-height: var(--touch-target);  /* 56px */
+  padding: 14px 20px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  background-color: var(--color-btn-primary);
+  color: var(--color-btn-primary-text);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 3px 8px rgba(30,30,46,0.25);
+  transition: transform 0.12s ease, opacity 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-save:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.btn-save:focus-visible {
+  outline: 3px solid var(--color-input-focus);
+  outline-offset: 2px;
+}
+
+.btn-save:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-save-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.btn-save-en {
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* --- Toast notification: short confirmation after save --- */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.toast {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-h) + 70px); /* above save bar */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  background-color: var(--color-text);
+  color: var(--color-btn-primary-text);
+  padding: 12px 20px;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(30,30,46,0.3);
+  animation: toastIn 0.2s ease-out forwards;
+  pointer-events: none;
+}
+
+.toast.toast--hide {
+  animation: toastOut 0.3s ease-in forwards;
+}
+
+/* ============================================================
+   Reorder Screen – Coming Soon
+   ============================================================ */
+.coming-soon {
+  padding: 60px 8px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.coming-soon-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.coming-soon-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.coming-soon-en {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 700;
+  opacity: 0.7;
 }
